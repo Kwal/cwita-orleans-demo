@@ -6,9 +6,11 @@ namespace Server
 {
     public class HelloWorldGrain : Grain, IHelloWorldGrain
     {
-        public Task<string> SayHello(string name)
+        public async Task<string> SayHello(string name)
         {
-            return Task.FromResult($"Oh hai {name}");
+            await Task.Delay(2000);
+            
+            return $"Oh hai {name}";
         }
     }
 }
