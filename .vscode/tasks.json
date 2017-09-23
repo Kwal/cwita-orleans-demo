@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "taskName": "build-server",
+            "type": "shell",
+            "command": "dotnet build ./Server/Server.csproj",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "taskName": "build-client",
+            "type": "shell",
+            "command": "dotnet build ./Client/Client.csproj",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        }
+    ]
+}

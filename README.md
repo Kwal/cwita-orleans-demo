@@ -1,2 +1,5 @@
-# cwita-orleans-demo
-Orleans Demo Code for CWITA Conference
+# Basic Virtual Actors Walkthrough/Demo
+
+This was put together for a talk at [CWITC](https://www.cwitc.org)
+
+Enjoy =)
