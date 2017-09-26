@@ -4,6 +4,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Orleans.Server" Version="2.0.0-preview3-20170913" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.0" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

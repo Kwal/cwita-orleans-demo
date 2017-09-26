@@ -9,7 +9,7 @@
             "program": "${workspaceRoot}/Server/bin/Debug/netcoreapp2.0/Server.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
-            "console": "externalTerminal",
+            "console": "integratedTerminal",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart"
         },
