@@ -1,4 +1,6 @@
-﻿using Interfaces;
+﻿using Bogus;
+using Interfaces;
+using Interfaces.Models;
 using Orleans;
 using Orleans.Runtime;
 using Orleans.Runtime.Configuration;
@@ -37,40 +39,10 @@ namespace Client
 
                 await sayHello("Matt");
 
-                var deviceIds = new[] { "123", "456", "789" };
-                using (var cancellation = new CancellationTokenSource())
-                {
-                    var token = cancellation.Token;
-                    var task = Task.Run(async () =>
-                    {
-                        var rand = new Random();
-                        while (!token.IsCancellationRequested)
-                        {
-                            var randomDevice = deviceIds[rand.Next(0, deviceIds.Length)];
-                            var intakeGrain = client.GetGrain<IDeviceLocationGrain>(randomDevice);
-                            await intakeGrain.Submit(rand.NextDouble(), rand.NextDouble());
-
-                            await Task.Delay(250);
-                        }
-                    }, token);
-
-                    Log.Logger.Information("Press any key to stop location updates...");
-                    Console.ReadKey(true);
-                    cancellation.Cancel();
-                }
-
-                var devicesGrain = client.GetGrain<IDevicesGrain>(0);
-                foreach (var id in deviceIds)
-                {
-                    var location = await devicesGrain.GetLocation(id);
-                    Log.Logger.Information("{Device} location: {Location}", id, location);
-                }
-
                 // await Task.WhenAll(
                 //     SayHello(client, "Alice"),
                 //     SayHello(client, "Bob")
                 // );
-
 
                 // var widgetId = new Random().Next(0, 100);
 
@@ -83,6 +55,59 @@ namespace Client
                 // widget = await widgetGrain.Get();
                 // Log.Logger.Information("{@Widget}", widget);
 
+                // var deviceIds = new[] { "123", "456", "789" };
+                // using (var cancellation = new CancellationTokenSource())
+                // {
+                //     var token = cancellation.Token;
+                //     var task = Task.Run(async () =>
+                //     {
+                //         var rand = new Random();
+                //         while (!token.IsCancellationRequested)
+                //         {
+                //             var randomDevice = deviceIds[rand.Next(0, deviceIds.Length)];
+                //             var intakeGrain = client.GetGrain<IDeviceLocationGrain>(randomDevice);
+                //             await intakeGrain.Submit(rand.NextDouble(), rand.NextDouble());
+
+                //             await Task.Delay(250);
+                //         }
+                //     }, token);
+
+                //     Log.Logger.Information("Press any key to stop location updates...");
+                //     Console.ReadKey(true);
+                //     cancellation.Cancel();
+                // }
+
+                // var devicesGrain = client.GetGrain<IDevicesGrain>(0);
+                // foreach (var id in deviceIds)
+                // {
+                //     var location = await devicesGrain.GetLocation(id);
+                //     Log.Logger.Information("{Device} location: {Location}", id, location);
+                // }
+
+                // var generator = new Faker<Sprocket>()
+                //     .RuleFor(x => x.Id, x => x.IndexGlobal)
+                //     .RuleFor(x => x.Name, x => x.Commerce.Product());
+
+                // var sprockets = generator.Generate(20);
+                // var sprocketWriter = client.GetGrain<ISprocketWriteGrain>(Guid.Empty);
+                // foreach (var s in sprockets)
+                // {
+                //     await sprocketWriter.Update(s);
+                // }
+
+                // var rand = new Random();
+                // var sprocketReader = client.GetGrain<ISprocketReadGrain>(Guid.Empty);
+                // for (var i = 0; i < 10; i++)
+                // {
+                //     var searchValue = sprockets[rand.Next(0, sprockets.Count)].Name.Substring(0, 3);
+                //     var results = await sprocketReader.Search(Guid.NewGuid().ToString(), searchValue);
+                //     if (results != null)
+                //     {
+                //         Log.Logger.Information("Found {@Sprockets}", results);
+                //     }
+                // }
+
+                Console.WriteLine("Press any key to exit...");
                 Console.ReadKey(true);
             }
         }
