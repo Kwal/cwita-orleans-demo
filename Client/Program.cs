@@ -5,7 +5,6 @@ using Orleans;
 using Orleans.Runtime;
 using Orleans.Runtime.Configuration;
 using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace Client
         static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+                .WriteTo.Console()
                 .CreateLogger();
 
             var config = ClientConfiguration.LocalhostSilo();
@@ -29,15 +28,18 @@ namespace Client
             {
                 await client.Connect();
 
-                async Task sayHello(string name)
-                {
-                    var helloWorldGrain = client.GetGrain<IHelloWorldGrain>(1);
-                    var message = await helloWorldGrain.SayHello(name);
+                var helloWorldGrain = client.GetGrain<IHelloWorldGrain>(1);
+                var message = await helloWorldGrain.SayHello("Matt");
 
-                    Log.Logger.Information(message);
-                };
+                Log.Logger.Information(message);
 
-                await sayHello("Matt");
+                // async Task sayHello(string name)
+                // {
+                //     var helloWorldGrain = client.GetGrain<IHelloWorldGrain>(1);
+                //     var message = await helloWorldGrain.SayHello(name);
+
+                //     Log.Logger.Information(message);
+                // };
 
                 // await Task.WhenAll(
                 //     SayHello(client, "Alice"),
