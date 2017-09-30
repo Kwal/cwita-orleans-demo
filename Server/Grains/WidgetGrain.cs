@@ -6,37 +6,31 @@ using System.Threading.Tasks;
 
 namespace Server.Grains
 {
-    public class WidgetGrain : Grain, IWidgetGrain
+    public class WidgetGrain : Grain<Widget>, IWidgetGrain
     {
-        private Widget _widget;
-
         public override async Task OnActivateAsync()
         {
-            // simulate slowly loading some state from storage
-            Log.Logger.Information("Loading widget {Id}", this.GetPrimaryKeyLong());
+            // this could be a call to external storage/system,
+            // so let's add some artificial delay
             await Task.Delay(2000);
             
-            _widget = new Widget
-            {
-                Id = (int)this.GetPrimaryKeyLong(),
-                Sku = "123ABC"
-            };
-
             await base.OnActivateAsync();
         }
 
         public Task<Widget> Get()
         {
-            return Task.FromResult(_widget);
+            return Task.FromResult(State);
         }
 
         public async Task Set(Widget widget)
         {
-            // simulate slowly updating state in storage
-            Log.Logger.Information("Updating widget {Id}", this.GetPrimaryKeyLong());
-            await Task.Delay(2000);
+            State = widget;
 
-            _widget = widget;
+            // this could be a call to external storage/system,
+            // so let's add some artificial delay
+            await Task.Delay(2000);
+            
+            await WriteStateAsync();
         }
     }
 }
