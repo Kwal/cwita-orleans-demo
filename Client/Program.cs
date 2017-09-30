@@ -28,10 +28,6 @@ namespace Client
             {
                 await client.Connect();
 
-                // var helloWorldGrain = client.GetGrain<IHelloWorldGrain>(1);
-                // var message = await helloWorldGrain.SayHello("Matt");
-
-                // Log.Logger.Information(message);
 
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey(true);
@@ -42,8 +38,10 @@ namespace Client
 
 
 
+// var helloWorldGrain = client.GetGrain<IHelloWorldGrain>(1);
+// var message = await helloWorldGrain.SayHello("Matt");
 
-
+// Log.Logger.Information(message);
 
 
 
@@ -81,19 +79,6 @@ namespace Client
 
 
 
-// var widgetId = new Random().Next(0, 100);
-
-// Log.Logger.Information("Let's grab a widget...");
-// var widgetGrain = client.GetGrain<IWidgetGrain>(widgetId);
-// var widget = await widgetGrain.Get();
-// Log.Logger.Information("{@Widget}", widget);
-
-// Log.Logger.Information("Let's grab that widget again...");
-// widget = await widgetGrain.Get();
-// Log.Logger.Information("{@Widget}", widget);
-
-
-
 
 // var deviceIds = new[] { "123", "456", "789" };
 // using (var cancellation = new CancellationTokenSource())
@@ -117,6 +102,8 @@ namespace Client
 //     cancellation.Cancel();
 // }
 
+// await Task.Delay(5000); // wait for last result to come in
+
 // var devicesGrain = client.GetGrain<IDevicesGrain>(0);
 // foreach (var id in deviceIds)
 // {
@@ -129,7 +116,7 @@ namespace Client
 
 // var generator = new Faker<Sprocket>()
 //     .RuleFor(x => x.Id, x => x.IndexGlobal)
-//     .RuleFor(x => x.Name, x => x.Commerce.Product());
+//     .RuleFor(x => x.Name, x => x.Random.Word());
 
 // var sprockets = generator.Generate(20);
 // var sprocketWriter = client.GetGrain<ISprocketWriteGrain>(Guid.Empty);
